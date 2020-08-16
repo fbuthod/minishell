@@ -25,7 +25,6 @@ int calculate_nbr_cmd(int n, char *cmd)
             boolean = 0;
         i++;
     }
-    printf("nb de commandes : %d\n", n);
     return (n);
 }
 
@@ -33,25 +32,24 @@ void parsing(char *cmd, int n)
 {
     int i;
     int compt;
-    char *buf = NULL;
 
     i = 0;
     compt = 0;
     while (compt < n)
     {
-        while (cmd[i] == ' ' || cmd[i] == ';')
-            i++;
-        printf("%d\n",ft_strncmp("echo ", &cmd[i], i+5));
-        if (ft_strncmp("echo ", &cmd[i], i+5) == 0)-
-            i = parse_echo(&cmd[i], i+5);
-        else if (ft_strncmp("exit", &cmd[i], i+4) == 0)
+        while (cmd[0] == ' ' || cmd[0] == ';')
+            cmd = ft_substr(cmd, 1, ft_strlen(cmd));
+        if (ft_strncmp("echo ", cmd, 5) == 0)
+            i = parse_echo(cmd, 5);
+        else if (ft_strncmp("exit", cmd, 4) == 0)
             exit(0);
-        else if (ft_strncmp("pwd", &cmd[i], i+3) == 0)
-            i = ft_printf("%s\n", getcwd(buf, 50));
-        else if (ft_strncmp("cd ", &cmd[i], i+3) == 0)
-            i = parse_cd(&cmd[i], i+3);
+        else if (ft_strncmp("pwd", cmd, 3) == 0)
+            i = ft_pwd(cmd);
+        else if (ft_strncmp("cd ", cmd, 3) == 0)
+            i = parse_cd(cmd, 3);
         else
-            i = printf("minishell : command not found: %s\n", &cmd[i]);
+            i = ft_error(cmd);
+        cmd = ft_substr(cmd, i, ft_strlen(cmd));
         compt++;
     }
 }

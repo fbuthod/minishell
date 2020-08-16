@@ -33,6 +33,8 @@ SRCS	=	minishell.c				\
 			get_next_line_utils.c	\
 			ft_echo.c				\
 			ft_cd.c					\
+			ft_error.c				\
+			ft_pwd.c				\
 
 OBJS	=	$(SRCS:.c=.o)
 
