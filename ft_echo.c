@@ -7,6 +7,14 @@ int quote_function(char *cmd)
     i = 1;
     while(cmd[i] != '"' || cmd[i] == '\0')
     {
+		if (cmd[i] == '\\')
+		{
+			if (cmd[i + 1] == 'n')
+			{
+				ft_printf("\n");
+				i += 2;
+			}
+		}
 		ft_printf("%c", cmd[i]);
         i++;
     }
@@ -37,8 +45,10 @@ int parse_echo(char *cmd, int i)
 			cmd = ft_substr(cmd, 1, ft_strlen(cmd));
 			compt++;
 		}
-		ft_printf("%c", cmd[i]);
-		i++;
+		if (cmd[i] == '\\')
+			i++;
+		else if (cmd[i] != ';')
+			ft_printf("%c", cmd[i++]);
 	}
 	while (cmd[i] == ' ')
 		i++;

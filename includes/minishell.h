@@ -12,5 +12,6 @@ int parse_echo(char *cmd, int i);
 int parse_cd(char *cmd, int i);
 int ft_error(char *cmd);
 int ft_pwd(char *cmd);
+void parsing(char *cmd, int n);
 
 #endif
