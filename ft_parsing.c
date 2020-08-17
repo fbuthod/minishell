@@ -37,8 +37,8 @@ void parsing(char *cmd, int n)
             exit(0);
         else if (ft_strncmp("pwd", cmd, 3) == 0)
             i = ft_pwd(cmd);
-        else if (ft_strncmp("cd ", cmd, 3) == 0)
-            i = parse_cd(cmd, 3);
+        else if (ft_strncmp("cd", cmd, 2) == 0)
+            i = parse_cd(cmd, 2);
         else if (cmd[0] == '\0')
             n = 0;
         else
