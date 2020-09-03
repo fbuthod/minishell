@@ -1,50 +1,46 @@
 # include "minishell.h"
 
-char *ft_first_test(char *cmd, int *n)
+void    check_output(char **cmd_lexer, int *i)
 {
-    while (cmd[0] == ' ' || cmd[0] == ';')
+    int fd;
+
+    while (cmd_lexer[(*i) + 1] != NULL && ft_strncmp(cmd_lexer[(*i)], "|", 2))
     {
-        if (cmd[0] == ';')
-            *n -= 1;
-        cmd = ft_substr(cmd, 1, ft_strlen(cmd));
+        if (ft_strncmp(cmd_lexer[(*i)], ">", 2) == 0) {
+            fd = open(cmd_lexer[(*i) + 1], O_CREAT | O_TRUNC | O_WRONLY);
+            ft_printf("Last open TRUNC : %s\n", cmd_lexer[(*i) + 1]);
+        } else if (ft_strncmp(cmd_lexer[(*i)], ">>", 3) == 0) {
+            fd = open(cmd_lexer[(*i) + 1], O_CREAT | O_APPEND);
+            ft_printf("Last open APPEMD : %s\n", cmd_lexer[(*i) + 1]);
+        }
+        (*i)++;
     }
-    return (ft_strdup(cmd));
 }
 
-char *ft_last_test(char *cmd, int *n)
-{
-    while (cmd[0] == ' ')
-        cmd = ft_substr(cmd, 1, ft_strlen(cmd));
-    if (cmd[0] == ';' && cmd[1] == '\0')
-        *n -= 1;
-    cmd = ft_substr(cmd, 1, ft_strlen(cmd));
-    return (ft_strdup(cmd));
-}
-
-void parsing(char *cmd, int n)
+void parsing(char **cmd_lexer)
 {
     int i;
-    int compt;
+    char *cmd;
 
     i = 0;
-    compt = 0;
-    while (compt < n)
+    while (cmd_lexer[i] != NULL)
     {
-        cmd = ft_first_test(cmd, &n);
+        cmd = cmd_lexer[i];
+        check_output(cmd_lexer, &i);
+
+        dprintf(1, "command:[%s] execute into:[%s]\n",
+                cmd, (cmd_lexer[i + 1]) ? cmd_lexer[i - 1] : cmd_lexer[i]);
         if (ft_strncmp("echo ", cmd, 5) == 0)
-            i = parse_echo(cmd, 5);
+            parse_echo(cmd, 5);
         else if (ft_strncmp("exit", cmd, 4) == 0)
             exit(0);
         else if (ft_strncmp("pwd", cmd, 3) == 0)
-            i = ft_pwd(cmd);
+            ft_pwd(cmd);
         else if (ft_strncmp("cd", cmd, 2) == 0)
-            i = parse_cd(cmd, 2);
-        else if (cmd[0] == '\0')
-            n = 0;
+            parse_cd(cmd, 2);
         else
-            i = ft_error(cmd);
-        cmd = ft_substr(cmd, i, ft_strlen(cmd));
-        cmd = ft_last_test(cmd, &n);
-        compt++;
+            ft_error(cmd);
+        i++;
     }
+    free_tab_str(cmd_lexer);
 }

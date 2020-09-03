@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fbuthod- <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 12:37:16 by fbuthod-          #+#    #+#              #
-#    Updated: 2020/03/13 19:34:57 by fbuthod-         ###   ########lyon.fr    #
+#    Updated: 2020/09/02 05:51:57 by gbaud            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,9 @@ SRCS	=	minishell.c				\
 			ft_error.c				\
 			ft_pwd.c				\
 			ft_parsing.c			\
+			ft_split_quotes.c		\
+			ft_split_quotes_basics.c\
+			ft_lexer.c
 
 OBJS	=	$(SRCS:.c=.o)
 

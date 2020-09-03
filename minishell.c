@@ -5,29 +5,6 @@
 # include "minishell.h"
 # include "get_next_line.h"
 
-int calculate_nbr_cmd(int n, char *cmd)
-{
-    int i;
-    int boolean;
-
-    i = 0;
-    boolean = 0;
-    while(i < (int)(ft_strlen(cmd)))
-    {
-        if(boolean == 0)
-        {
-            if(cmd[i] == ';')
-                n++;
-        }
-        if((cmd[i] == '"') && (boolean == 0))
-            boolean = 1;
-        else if(cmd[i] == '"' && (boolean == 1))
-            boolean = 0;
-        i++;
-    }
-    return (n);
-}
-
 char *get_cmd()
 {
 	char	*line;
@@ -39,15 +16,28 @@ char *get_cmd()
 int main()
 {
     char    *cmd;
-    int     n;
+    char    **cmd_split;
+    char    **cmd_lexer;
+    int     i;
 
-    n = 1;
     while(1)
     {
         ft_printf("minishell : ");
         cmd = get_cmd();
-        n = calculate_nbr_cmd(n, cmd);
-        parsing(cmd, n);
-        n = 1;
+        cmd_split = ft_split_quotes(cmd, is_separator);
+        i = 0;
+        while (cmd_split[i])
+        {
+            if (ft_strncmp(cmd_split[i], ";", 2) != 0)
+            {
+                dprintf(1, "{%d : %s}\n", i, cmd_split[i]);
+                cmd_lexer = ft_lexer(cmd_split[i]);
+                if (cmd_lexer)
+                    parsing(cmd_lexer);
+            }
+            i++;
+        }
+        if (cmd_split)
+            free_tab_str(cmd_split);
     }
 }

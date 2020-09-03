@@ -3,15 +3,37 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include "../ft_printf/libft/libft.h"
 # include "../ft_printf/include/libftprintf.h"
 
+typedef struct  t_split_quotes
+{
+	int         s_quote;
+	int         d_quote;
+	int         escaped;
+}               s_split_quotes;
+
+
 int	ft_read_line(int *get, char **line);
+char **ft_lexer(char *str);
 char *ft_strdup(const char *s1);
 int parse_echo(char *cmd, int i);
 int parse_cd(char *cmd, int i);
-int ft_error(char *cmd);
+void ft_error(char *cmd);
 int ft_pwd(char *cmd);
-void parsing(char *cmd, int n);
+void parsing(char **cmd_lexer);
+
+/*
+** lexer.c functions
+*/
+int		is_redirection(char *str, int i);
+int		is_separator(char *str, int i);
+void	check_quotes(s_split_quotes *states, char *str, int i);
+int		count_strs(char *str, int (*f)(char *, int));
+int     count_from(char *str, int *i, int (*f)(char *, int));
+void    fill_from(char **res, int j, char *str, int *i, int (*f)(char *, int));
+char    **ft_split_quotes(char *str, int (*f)(char *, int));
+void	*free_tab_str(char **res);
 
 #endif
