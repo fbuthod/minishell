@@ -6,7 +6,7 @@
 #    By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 12:37:16 by fbuthod-          #+#    #+#              #
-#    Updated: 2020/09/02 05:51:57 by gbaud            ###   ########.fr        #
+#    Updated: 2020/09/04 11:53:34 by gbaud            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,9 @@ SRCS	=	minishell.c				\
 			ft_parsing.c			\
 			ft_split_quotes.c		\
 			ft_split_quotes_basics.c\
-			ft_lexer.c
+			ft_lexer.c				\
+			ft_executor.c			\
+			ft_env.c
 
 OBJS	=	$(SRCS:.c=.o)
 

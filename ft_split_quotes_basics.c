@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 04:05:16 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/03 00:55:15 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/04 13:00:14 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ int		is_redirection(char *str, int i)
 int		is_separator(char *str, int i)
 {
 	if (str[i] == ';')
+		return (1);
+	return (0);
+}
+
+int		is_space(char *str, int i)
+{
+	if (str[i] == ' ')
 		return (1);
 	return (0);
 }

@@ -33,6 +33,8 @@ int parse_echo(char *cmd, int i)
         cmd = ft_substr(cmd, 1, ft_strlen(cmd));
 	while (cmd[i] != ';' && cmd[i] != '\0')
 	{
+		if (cmd[i] == '$')
+			i += ft_env(&cmd[i+1]);
 		if (ft_strncmp("-n ", &cmd[i], i+3) == 0)
 		{
 			res = 1;

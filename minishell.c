@@ -13,13 +13,16 @@ char *get_cmd()
     return (ft_strdup(line));
 }
 
-int main()
+int main(int ac, char **av, char *envp[])
 {
     char    *cmd;
     char    **cmd_split;
     char    **cmd_lexer;
     int     i;
 
+    ac = 0;
+    av = 0;
+    g_env = envp;
     while(1)
     {
         ft_printf("minishell : ");

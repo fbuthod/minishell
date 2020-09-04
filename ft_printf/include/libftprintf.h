@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libftprintf.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 11:00:21 by ksam              #+#    #+#             */
-/*   Updated: 2020/03/06 00:02:01 by ksam             ###   ########lyon.fr   */
+/*   Updated: 2020/09/04 11:19:15 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,4 @@ void				if_di_is_int_min(char *buffer, t_printf *bag);
 void				if_prec_zero(t_printf *bag);
 void				width_without_minus(char *buffer, int specifier_di,
 					t_printf *bag);
-int					main(int ac, char **av);
 #endif
