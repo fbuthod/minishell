@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parsing.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/05 03:10:28 by gbaud             #+#    #+#             */
+/*   Updated: 2020/09/05 08:26:26 by gbaud            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "minishell.h"
 
 void    check_output(char **cmd_lexer, int *i)
@@ -26,16 +38,17 @@ char **ft_remove_void(char **arr)
 
     i = 0;
     count = 0;
+    trim_tab(arr);
     while (arr[i])
-        if (ft_strncmp(arr[i++], " ", 2) || ft_strncmp(arr[i++], "", 1))
+        if (ft_strncmp(arr[i++], "", 1))
             count++;
-    if (!(res = malloc(sizeof(char *) * count + 1)))
+    if (!(res = malloc(sizeof(char *) * (count + 1))))
         return (NULL);    
     res[count] = NULL;
     i = -1;
     count = 0;
     while (arr[++i])
-        if (ft_strncmp(arr[i], " ", 2) || ft_strncmp(arr[i++], "", 1))
+        if (ft_strncmp(arr[i], "", 1))
             res[count++] = ft_strdup(arr[i]);
     free_tab_str(arr);
     return (res);

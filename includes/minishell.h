@@ -19,7 +19,6 @@ typedef struct  t_split_quotes
 
 char  **g_env;
 int	g_pfd[2];
-int g_close;
 
 int	ft_read_line(int *get, char **line);
 char **ft_lexer(char *str);
@@ -46,6 +45,7 @@ int		is_space(char *str, int i);
 void	check_quotes(s_split_quotes *states, char *str, int i);
 int		count_strs(char *str, int (*f)(char *, int));
 int     count_from(char *str, int *i, int (*f)(char *, int));
+void	trim_tab(char **res);
 void    fill_from(char **res, int j, char *str, int *i, int (*f)(char *, int));
 char    **ft_split_quotes(char *str, int (*f)(char *, int));
 void	*free_tab_str(char **res);

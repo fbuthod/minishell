@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 11:53:38 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/04 13:52:17 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/05 10:22:53 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ int     start_process(char *path, char **args)
     int     status;
     
     pid = fork();
-    if (pid == 0)
+    if (pid < 0)
+        ft_printf("Fork error %s\n", path);
+    else if (pid == 0)
     {
         if (execve(path, args, g_env) == -1)
         {

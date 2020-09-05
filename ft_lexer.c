@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 05:05:17 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/03 00:33:19 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/05 08:33:21 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void trim_tab(char **res)
 	{
 		tmp = ft_strtrim(res[i], " ");
 		free(res[i]);
-		res[i] = tmp;
+		res[i] = ft_strdup(tmp);
+		free(tmp);
 		i++;
 	}
 }
