@@ -17,10 +17,16 @@ int main(int ac, char **av, char *envp[])
     g_env = envp;
     while(1)
     {
-        ft_printf("minishell : ");
-        get_next_line(&cmd);
-        cmd_split = ft_split_quotes(cmd, is_separator);
         i = 0;
+        ft_apply_signals(&ft_shell_mode);
+        ft_printf("minishell : ");
+        if (get_next_line(&cmd) == 0)
+        {
+            ft_printf("exit\n");
+            free(cmd);
+            exit(0);
+        }
+        cmd_split = ft_split_quotes(cmd, is_separator);
         while (cmd_split[i])
         {
             if (ft_strncmp(cmd_split[i], ";", 2) != 0)

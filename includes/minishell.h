@@ -7,6 +7,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <signal.h>
 # include "../ft_printf/libft/libft.h"
 # include "../ft_printf/include/libftprintf.h"
 
@@ -32,6 +33,9 @@ void get_env(char *cmd);
 int ft_env(char *cmd);
 int ft_export(char *cmd, int i);
 int ft_unset(char *cmd, int i);
+void	ft_apply_signals(void (*signal_func)(int));
+void	ft_shell_mode(int code);
+void	ft_ignore_signals(void);
 
 char    *ft_isinpath(char *executable);
 int     start_process(char *path, char **args);

@@ -71,9 +71,6 @@ void parsing(char **cmd_lexer)
     {
         cmd = cmd_lexer[i];
         check_output(cmd_lexer, &i);
-
-        dprintf(1, "command:[%s] execute into:[%s]\n",
-                cmd, (cmd_lexer[i + 1]) ? cmd_lexer[i - 1] : cmd_lexer[i]);
         if (ft_strncmp("export", cmd, 6) == 0)
             ft_export(cmd, 6);
         else if (ft_strncmp("unset ", cmd, 6) == 0)

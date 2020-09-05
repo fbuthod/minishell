@@ -41,7 +41,7 @@ char    *ft_isinpath(char *executable)
     while (strs[++i])
         if ((res = check_path(strs[i], executable)) != NULL)
         {
-            free_tab_str(strs);
+            //free_tab_str(strs);
             return (res);
         }
     free_tab_str(strs);
@@ -52,7 +52,6 @@ int     start_process(char *path, char **args)
 {
     pid_t   pid;
     int     status;
-    
     pid = fork();
     if (pid < 0)
         ft_printf("Fork error %s\n", path);

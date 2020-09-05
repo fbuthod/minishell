@@ -40,7 +40,8 @@ SRCS	=	minishell.c				\
 			ft_split_quotes_basics.c\
 			ft_lexer.c				\
 			ft_executor.c			\
-			ft_env.c
+			ft_env.c				\
+			ft_signals.c
 
 OBJS	=	$(SRCS:.c=.o)
 
