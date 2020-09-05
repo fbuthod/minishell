@@ -18,6 +18,29 @@ void    check_output(char **cmd_lexer, int *i)
     }
 }
 
+char **ft_remove_void(char **arr)
+{
+    int i;
+    int count;
+    char **res;
+
+    i = 0;
+    count = 0;
+    while (arr[i])
+        if (ft_strncmp(arr[i++], " ", 2) || ft_strncmp(arr[i++], "", 1))
+            count++;
+    if (!(res = malloc(sizeof(char *) * count + 1)))
+        return (NULL);    
+    res[count] = NULL;
+    i = -1;
+    count = 0;
+    while (arr[++i])
+        if (ft_strncmp(arr[i], " ", 2) || ft_strncmp(arr[i++], "", 1))
+            res[count++] = ft_strdup(arr[i]);
+    free_tab_str(arr);
+    return (res);
+}
+
 void parsing(char **cmd_lexer)
 {
     int i;
@@ -53,6 +76,7 @@ void parsing(char **cmd_lexer)
         else
         {
             tmp = ft_split_quotes(cmd, is_space);
+            tmp = ft_remove_void(tmp);
             if ((path = ft_isinpath(tmp[0])))
                 start_process(path, tmp);
             else if (tmp[0][0] == '/')
@@ -63,9 +87,3 @@ void parsing(char **cmd_lexer)
     }
     free_tab_str(cmd_lexer);
 }
-
-/*
-
-TODO : remove space in tmp tab
-
-*/
