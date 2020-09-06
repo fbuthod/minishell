@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 05:05:17 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/05 08:33:21 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/06 01:33:34 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		tab_len(char **res)
 	return (i);
 }
 
-void trim_tab(char **res)
+char **trim_tab(char **res)
 {
 	int i;
 	char *tmp;
@@ -48,6 +48,7 @@ void trim_tab(char **res)
 		free(tmp);
 		i++;
 	}
+	return (res);
 }
 
 char	**ft_lexer(char *str)
@@ -59,7 +60,7 @@ char	**ft_lexer(char *str)
     res = ft_split_quotes(str, is_redirection);
     len = tab_len(res);
 	i = -1;
-	trim_tab(res);
+	res = trim_tab(res);
 	while (res != NULL && ++i < len)
 		if (ft_strncmp(res[i], "", 1) == 0)
 			res = free_tab_str(res);

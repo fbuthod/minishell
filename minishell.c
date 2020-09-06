@@ -5,6 +5,8 @@
 # include "minishell.h"
 # include "get_next_line.h"
 
+// TODO: Gerer au global les variables d'environement
+
 int main(int ac, char **av, char *envp[])
 {
     char    *cmd;
@@ -26,6 +28,7 @@ int main(int ac, char **av, char *envp[])
             free(cmd);
             exit(0);
         }
+        // TODO: Segfault avec : [";s"]
         cmd_split = ft_split_quotes(cmd, is_separator);
         while (cmd_split[i])
         {
@@ -33,7 +36,12 @@ int main(int ac, char **av, char *envp[])
             {
                 cmd_lexer = ft_lexer(cmd_split[i]);
                 if (cmd_lexer)
-                    parsing(cmd_lexer);
+                    if (parsing(cmd_lexer))
+                    {
+                        free_tab_str(cmd_split);
+                        free(cmd);
+                        exit(0);
+                    }
             }
             i++;
         }

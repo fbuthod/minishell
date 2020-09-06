@@ -8,8 +8,11 @@ void	ft_apply_signals(void (*signal_func)(int))
 
 void	ft_shell_mode(int code)
 {
+	int pid;
+
+	pid = code;
 	if (code == 2)
 		ft_printf("\nminishell : ");
-	if (code == 3)
-		ft_printf("\nminishell : ");
+	else if (code == 3)
+		kill(pid, code);
 }

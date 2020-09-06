@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 11:53:38 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/05 10:22:53 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/06 07:50:20 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char    *ft_isinpath(char *executable)
     while (strs[++i])
         if ((res = check_path(strs[i], executable)) != NULL)
         {
-            //free_tab_str(strs);
+            free_tab_str(strs);
             return (res);
         }
     free_tab_str(strs);
@@ -52,9 +52,13 @@ int     start_process(char *path, char **args)
 {
     pid_t   pid;
     int     status;
+    
     pid = fork();
     if (pid < 0)
+    {
         ft_printf("Fork error %s\n", path);
+        exit(1);
+    }
     else if (pid == 0)
     {
         if (execve(path, args, g_env) == -1)
@@ -65,6 +69,6 @@ int     start_process(char *path, char **args)
         exit(0);
     }
     else
-        wait(&status);
+        waitpid(-1, &status, 0);
     return (0);
 }
