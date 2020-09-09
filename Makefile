@@ -6,7 +6,7 @@
 #    By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 12:37:16 by fbuthod-          #+#    #+#              #
-#    Updated: 2020/09/04 11:53:34 by gbaud            ###   ########.fr        #
+#    Updated: 2020/09/09 09:05:59 by gbaud            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,68 +14,55 @@
 #                                    VARIABLES                                 #
 # **************************************************************************** #
 
-default: all
+CC=clang
 
-OS = $(shell uname)
+CFLAGS=-Wall -Wextra -Werror -g3 -I ./includes/
 
-NAME    =	minishell
+NAME=minishell
+
+SRCS	=	./src/main.c							\
+			./src/env/ft_env_manager.c				\
+			./src/env/ft_replace_env.c				\
+			./src/parser/ft_get_command_list.c		\
+			./src/parser/ft_split_quotes.c			\
+			./src/parser/ft_split_quotes_basics.c	\
+			./src/parser/ft_lexer.c					\
+			./src/utils/ft_signals.c
+
+
+LIBFT	=	./libft/libft.a
 
 HEADER	=	includes/minishell.h
 
-PRINTF	=	libftprintf.a
-
-PRINTFS	=	ft_printf/libftprintf.a
-
-LIBFTS	=	ft_printf/libft/libft.a
-
-SRCS	=	minishell.c				\
-			get_next_line.c			\
-			get_next_line_utils.c	\
-			ft_echo.c				\
-			ft_cd.c					\
-			ft_error.c				\
-			ft_pwd.c				\
-			ft_parsing.c			\
-			ft_split_quotes.c		\
-			ft_split_quotes_basics.c\
-			ft_lexer.c				\
-			ft_executor.c			\
-			ft_env.c				\
-			ft_signals.c
-
 OBJS	=	$(SRCS:.c=.o)
 
-CC 		=	clang
-
 RM		=	rm -f
-
-CFLAGS	=	-Wall -Wextra -Werror -g3 -Iincludes/ -Ift_printf/include/ -Ift_print/libft/
-
 
 # **************************************************************************** #
 #                                    RULES                                     #
 # **************************************************************************** #
 
-all		:	$(NAME) $(HEADER)
+%.c%.o:
+				$(CC) $(CFLAGS) -c $< -o $@
 
-%.o		:	%.c $(HEADER)
-			$(CC) $(CFLAGS) -c $< -o $@
+all:            $(NAME)
 
-$(NAME)	:	$(PRINTF) $(OBJS) $(HEADER)
-			$(CC) $(CFLAGS) -o $@ $(SRCS) $(PRINTFS) -Lft_printf
+$(OBJS):        $(INC)
 
-$(PRINTF)	:
-			$(MAKE) -C ft_printf all
+lib:
+				$(MAKE) -C libft
 
-clean	:
-			$(MAKE) -C ft_printf $@
-			$(RM) $(OBJS)
+$(NAME):        $(OBJS) $(HEADER) lib
+				$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-fclean	: 	clean
-			$(RM) $(LIBFTS)
-			$(RM) $(PRINTFS)
-			$(RM) $(NAME)
+clean:
+				$(RM) $(OBJS)
+				cd libft && make clean
 
-re		:	fclean all
+fclean:         clean
+				$(RM) $(NAME)
+				cd libft && make fclean
 
-.PHONY	:	clean fclean all re
+re:             fclean all
+
+.PHONY: all bonus clean fclean re lib
