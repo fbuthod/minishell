@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 04:05:16 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/09 08:59:46 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/10 09:15:57 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,16 @@ int		is_space(char *str, int i)
 	return (0);
 }
 
-void	check_quotes(s_split_quotes *states, char *str, int i)
+int		is_pipe_redirection(char *str, int i)
+{
+	if (str[i] == '>' && str[i + 1] == '>')
+		return (2);
+	else if (str[i] == '|' || str[i] == '>' || str[i] == '<')
+		return (1);
+	return (0);
+}
+
+void	check_quotes(t_split_quotes *states, char *str, int i)
 {
 	if (!(states->escaped % 2) && str[i] == '\"' && !states->s_quote)
 		states->d_quote = (states->d_quote) ? 0 : 1;
@@ -52,7 +61,7 @@ void	check_quotes(s_split_quotes *states, char *str, int i)
 
 int		count_strs(char *str, int (*f)(char *, int))
 {
-	s_split_quotes	states;
+	t_split_quotes	states;
 	int				res;
 	int				i;
 
@@ -83,7 +92,7 @@ int		count_strs(char *str, int (*f)(char *, int))
 
 int		count_from(char *str, int *i, int (*f)(char *, int))
 {
-	s_split_quotes	states;
+	t_split_quotes	states;
 	int				j;
 
 	j = 0;

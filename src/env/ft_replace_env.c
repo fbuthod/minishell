@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:25:48 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/09 12:55:42 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/10 06:53:31 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char* replace_word(char* s, int start, char* o, char* n)
 
 char    *replace_env_var(char *cmd)
 {
-    s_split_quotes	states;
+    t_split_quotes	states;
     char *res;
     char *key;
     char *value;

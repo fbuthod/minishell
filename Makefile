@@ -6,7 +6,7 @@
 #    By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 12:37:16 by fbuthod-          #+#    #+#              #
-#    Updated: 2020/09/09 09:05:59 by gbaud            ###   ########.fr        #
+#    Updated: 2020/09/11 07:13:52 by gbaud            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ NAME=minishell
 SRCS	=	./src/main.c							\
 			./src/env/ft_env_manager.c				\
 			./src/env/ft_replace_env.c				\
+			./src/execution/ft_exec.c				\
+			./src/execution/ft_commands_utils.c		\
 			./src/parser/ft_get_command_list.c		\
 			./src/parser/ft_split_quotes.c			\
 			./src/parser/ft_split_quotes_basics.c	\

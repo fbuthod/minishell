@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 22:55:41 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/09 12:58:50 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/10 03:57:30 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ int main(int ac, char **av, char *envp[])
 {
     char    *cmd;
     char    **cmd_split;
-    //char    **cmd_lexer;
     int     i;
-    //int     j;
 
     ac = 0;
     av = 0;
@@ -41,8 +39,7 @@ int main(int ac, char **av, char *envp[])
         while (cmd_split[++i])
             if (ft_strncmp(cmd_split[i], ";", 2) != 0)
             {
-                ft_printf("[%s]\n", cmd_split[i]);
-                //cmd_lexer = get_command_list(cmd_split[i]);
+                get_command_list(cmd_split[i]);
                 /*if (cmd_lexer)
                 {
                     j = -1;
@@ -59,5 +56,4 @@ int main(int ac, char **av, char *envp[])
 /*
 ** TODO: Fonction pour check si > < >> dans une liste
 ** TODO: Fonction qui lexe et trie les commandes
-** TODO: Add $? dans le replace
 */

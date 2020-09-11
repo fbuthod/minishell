@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 04:02:15 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/09 08:50:47 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/10 06:53:38 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_fill_tab(char **res, char *str, int (*f)(char *, int))
 
 void	fill_from(char **res, int k, char *str, int *i, int (*f)(char *, int))
 {
-	s_split_quotes	states;
+	t_split_quotes	states;
 	int				j;
 
 	j = 0;
