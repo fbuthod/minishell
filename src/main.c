@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 22:55:41 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/10 03:57:30 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/15 01:49:04 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int main(int ac, char **av, char *envp[])
 {
     char    *cmd;
     char    **cmd_split;
+    char    **cmd_lexer;
     int     i;
 
     ac = 0;
@@ -39,14 +40,12 @@ int main(int ac, char **av, char *envp[])
         while (cmd_split[++i])
             if (ft_strncmp(cmd_split[i], ";", 2) != 0)
             {
-                get_command_list(cmd_split[i]);
-                /*if (cmd_lexer)
+                cmd_lexer = ft_lexer(cmd_split[i], is_pipe);
+                if (cmd_lexer)
                 {
-                    j = -1;
-                    while (cmd_lexer[++j])
-                        ;
+                    exec_command_list(cmd_lexer);
                     free_tab_str(cmd_lexer);
-                }*/
+                }
             }
         free_tab_str(cmd_split);
         free(cmd);

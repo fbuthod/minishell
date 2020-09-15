@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/09 09:05:19 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/10 10:30:35 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/15 01:47:54 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,4 @@ t_list *get_from(char **arr)
         i += arr[i + 1] ? 2 : 1;
     }
     return(head);
-}
-
-void    get_command_list(char *cmd)
-{
-    char **tmp;
-    t_list *head;
-
-    tmp = ft_lexer(cmd, is_pipe_redirection);
-    if (tmp)
-    {
-        head = get_from(tmp);
-        exec_list(head);
-    }
 }

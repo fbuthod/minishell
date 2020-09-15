@@ -1,0 +1,21 @@
+echo "in_1 :"
+diff in_1 ./ref/ref_in_1
+echo "in_2 :"
+diff in_2 ./ref/ref_in_2
+echo "in_3 :"
+diff in_3 ./ref/ref_in_3
+echo "in_4 :"
+diff in_4 ./ref/ref_in_4
+echo "in_5 :"
+diff in_5 ./ref/ref_in_5
+
+echo "out_1 :"
+diff out_1 ./ref/ref_out_1
+echo "out_2 :"
+diff out_2 ./ref/ref_out_2
+echo "out_3 :"
+diff out_3 ./ref/ref_out_3
+echo "out_4 :"
+diff out_4 ./ref/ref_out_4
+echo "out_5 :"
+diff out_5 ./ref/ref_out_5

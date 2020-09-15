@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 04:05:16 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/10 09:15:57 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/15 03:40:44 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ int		is_redirection(char *str, int i)
 	if (str[i] == '>' && str[i + 1] == '>')
 		return (2);
 	else if (str[i] == '>' || str[i] == '<')
+		return (1);
+	return (0);
+}
+
+int		is_spaceredirection(char *str, int i)
+{
+	if (str[i] == '>' && str[i + 1] == '>')
+		return (2);
+	else if (str[i] == '>' || str[i] == '<' || str[i] == ' ')
 		return (1);
 	return (0);
 }
