@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 02:52:52 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/15 06:10:37 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/15 06:46:45 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char        **fd_parser(char **args)
     return (res);
 }
 
-
+// TODO: Bug si une seul <
 // TODO: Check non double redirection
 t_command   *make_command(char *cmd)
 {
