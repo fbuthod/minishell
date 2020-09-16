@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 04:02:15 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/16 11:36:31 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/16 16:12:46 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,22 @@ void	*ft_free_error(char **res, int i)
 	return (NULL);
 }
 
-char	**allocate_all(char *str, int (*f)(char *, int))
+#include <stdio.h>
+char	**allocate_all(char *str, int (*f)(const char *, int))
 {
 	char	**res;
 	int		i;
 	int		j;
 
-	if (!(res = ft_calloc((count_strs(str, f) + 1) * sizeof(char *), 1)))
+	if (!(res = ft_calloc((count_strs(str, f) + 1), sizeof(char *))))
 		return (NULL);
 	i = 0;
 	j = -1;
 	while (++j <= count_strs(str, f))
 	{
-		if (!(res[j] = ft_calloc(count_from(str, &i, f) + 1, 1)))
-			return (ft_free_error(res, j));
+		if (str[i])
+			if (!(res[j] = ft_calloc(count_from(str, &i, f) + 1, 1)))
+				return (ft_free_error(res, j));
 		while (f(str, i))
 		{
 			if (++j < count_strs(str, f))
@@ -48,7 +50,7 @@ char	**allocate_all(char *str, int (*f)(char *, int))
 	return (res);
 }
 
-void	ft_fill_tab(char **res, char *str, int (*f)(char *, int))
+void	ft_fill_tab(char **res, char *str, int (*f)(const char *, int))
 {
 	int i;
 	int j;
@@ -71,7 +73,7 @@ void	ft_fill_tab(char **res, char *str, int (*f)(char *, int))
 	}
 }
 
-void	fill_from(char **res, int k, char *str, int *i, int (*f)(char *, int))
+void	fill_from(char **res, int k, char *str, int *i, int (*f)(const char *, int))
 {
 	t_split_quotes	states;
 	int				j;
@@ -92,7 +94,7 @@ void	fill_from(char **res, int k, char *str, int *i, int (*f)(char *, int))
 	res[k][j++] = 0;
 }
 
-char	**ft_split_quotes(char *str, int (*f)(char *, int))
+char	**ft_split_quotes(char *str, int (*f)(const char *, int))
 {
 	char **res;
 

@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 05:05:17 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/16 11:58:34 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/16 16:05:02 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char **trim_tab(char **res)
 	return (res);
 }
 
-char	**ft_lexer(char *str, int (*f)(char *, int))
+char	**ft_lexer(char *str, int (*f)(const char *, int))
 {
 	char **res;
     int len;

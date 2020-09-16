@@ -90,20 +90,20 @@ void			ft_apply_signals(void (*signal_func)(int));
 /*
 ** ft_lexer.c functions
 */
-char			**ft_lexer(char *str, int (*f)(char *, int));
-int				is_spaceredirection(char *str, int i);
-int				is_redirection(char *str, int i);
-int				is_separator(char *str, int i);
-int				is_space(char *str, int i);
-int				is_equal(char *str, int i);
-int				is_pipe(char *str, int i);
-int				is_pipe_redirection(char *str, int i);
-void			check_quotes(t_split_quotes *states, char *str, int i);
-int				count_strs(char *str, int (*f)(char *, int));
-int     		count_from(char *str, int *i, int (*f)(char *, int));
+char			**ft_lexer(char *str, int (*f)(const char *, int));
+int				is_spaceredirection(const char *str, int i);
+int				is_redirection(const char *str, int i);
+int				is_separator(const char *str, int i);
+int				is_space(const char *str, int i);
+int				is_equal(const char *str, int i);
+int				is_pipe(const char *str, int i);
+int				is_pipe_redirection(const char *str, int i);
+void			check_quotes(t_split_quotes *states, const char *str, int i);
+int				count_strs(const char *str, int (*f)(const char *, int));
+int     		count_from(char *str, int *i, int (*f)(const char *, int));
 char			**trim_tab(char **res);
-void    		fill_from(char **res, int j, char *str, int *i, int (*f)(char *, int));
-char    		**ft_split_quotes(char *str, int (*f)(char *, int));
+void    		fill_from(char **res, int j, char *str, int *i, int (*f)(const char *, int));
+char    		**ft_split_quotes(char *str, int (*f)(const char *, int));
 void			*free_tab_str(char **res);
 
 #endif

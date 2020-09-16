@@ -6,7 +6,7 @@
 #    By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 12:37:16 by fbuthod-          #+#    #+#              #
-#    Updated: 2020/09/16 01:25:45 by gbaud            ###   ########.fr        #
+#    Updated: 2020/09/16 14:12:53 by gbaud            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 
 CC=clang
 
-CFLAGS=-Wall -Wextra -Werror -g3 -I ./includes/
+CFLAGS=-Wall -Wextra -Werror -g3 -fsanitize=address -I ./includes/
 
 NAME=minishell
 

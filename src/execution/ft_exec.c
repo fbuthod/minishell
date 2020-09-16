@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 02:52:52 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/16 11:48:15 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/16 15:48:06 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,9 +283,6 @@ int     exec_command_list(char **cmd_list)
                     close(g_in);
                 if (g_out > 0)
                     close(g_out);
-                free(g_cmd);
-                ft_free_strs_tab(g_cmd_lexer);
-                ft_free_strs_tab(g_cmd_split);
                 exit(g_last_state);
             }
             else

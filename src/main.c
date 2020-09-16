@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 22:55:41 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/16 12:29:58 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/16 16:12:52 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ int main(int ac, char **av, char *envp[])
                 if (g_cmd_lexer)
                 {
                     ret = exec_command_list(g_cmd_lexer);
-                    free_tab_str(g_cmd_lexer);
+                    ft_free_strs_tab(g_cmd_lexer);
                 }
                 if (ret)
                     break ;
             }
-        free_tab_str(g_cmd_split);
+        ft_free_strs_tab(g_cmd_split);
         free(g_cmd);
         if (ret)
             break ;
