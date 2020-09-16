@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 01:04:27 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/16 03:36:42 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/16 11:50:55 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ t_boolean check_exit(char *cmd_list)
     char **tmp;
 
     tmp = ft_split(cmd_list, ' ');
-    tmp = trim_tab(tmp);
+    trim_tab(tmp);
     tmp = ft_remove_void_elem(tmp);
     if (!(ft_strncmp(tmp[0], "exit", 5)))
-    {
-        if (tmp[1] && !tmp[2] && ft_allisdigit(tmp[1]))
+        if ((tmp[1] && !tmp[2] && ft_allisdigit(tmp[1])) || !tmp[1])
+        {
+            ft_free_strs_tab(tmp);
             return (TRUE);
-        else if (!tmp[1])
-            return (TRUE);
-    }
+        }
+    ft_free_strs_tab(tmp);
     return (FALSE);
 }   
 

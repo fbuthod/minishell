@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 02:52:52 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/16 03:41:41 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/16 11:48:15 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char        **ft_remove_void_elem(char **args)
             res[j] = ft_strdup(args[i]);
             j++;
         }
+    ft_free_strs_tab(args);
     return (res);
 }
 
@@ -111,7 +112,7 @@ int         fill_args(t_command *cmd_s, char *cmd, int i)
 
     if (!(args = ft_split_quotes(&cmd[i], is_spaceredirection)))
         return (FALSE);
-    args = trim_tab(args);
+    trim_tab(args);
     args = ft_remove_void_elem(args);
     if (!check_valid_command(args))
     {
@@ -199,6 +200,7 @@ char    *ft_isinpath(char *executable)
         free(complete_path);
         i++;
     }
+    free_tab_str(tmp_path);
     return (NULL);
 }
 
@@ -212,18 +214,20 @@ void    exec_system(t_command *cmd)
         tmp_env = env_to_tab();
         if (execve(path, cmd->args, tmp_env) == -1)
         {
+            free(path);
             ft_free_strs_tab(tmp_env);
             ft_printf("Execution error %s\n", path);
             g_last_state = 127;
-            exit (g_last_state);
+            return ;
         }
+        g_last_state = 0;
+        free(path);
         ft_free_strs_tab(tmp_env);
     }
     else
     {
         g_last_state = 127;
         ft_printf("%s : command introuvale\n", cmd->cmd);
-        exit (g_last_state);
     }
 }
 
@@ -249,6 +253,9 @@ void    exec_process(char *cmd)
         ft_exit(cmd_struct);
     else
         exec_system(cmd_struct);
+    ft_free_strs_tab(cmd_struct->args);
+    free(cmd_struct->cmd);
+    free(cmd_struct);
 }
 
 int     exec_command_list(char **cmd_list)
@@ -276,6 +283,9 @@ int     exec_command_list(char **cmd_list)
                     close(g_in);
                 if (g_out > 0)
                     close(g_out);
+                free(g_cmd);
+                ft_free_strs_tab(g_cmd_lexer);
+                ft_free_strs_tab(g_cmd_split);
                 exit(g_last_state);
             }
             else

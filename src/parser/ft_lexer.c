@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 05:05:17 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/10 02:29:10 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/16 11:58:34 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,16 @@ char	**ft_lexer(char *str, int (*f)(char *, int))
     res = ft_split_quotes(str, f);
     len = tab_len(res);
 	i = -1;
-	res = trim_tab(res);
+	trim_tab(res);
 	while (res != NULL && ++i < len)
 		if (ft_strncmp(res[i], "", 1) == 0)
-			res = free_tab_str(res);
+			free_tab_str(res);
 	if (res != NULL && f(res[len - 1], 0))
-		res = free_tab_str(res);
+		free_tab_str(res);
 	i = -1;
 	while (res != NULL && ++i < len - 1)
 		if (f(res[i], 0) && f(res[i + 1], 0))
-			res = free_tab_str(res);
+			free_tab_str(res);
 	if (res == NULL)
 		ft_printf("parsing error\n");
 	return (res);
