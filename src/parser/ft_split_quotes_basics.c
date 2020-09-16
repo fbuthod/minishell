@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 04:05:16 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/15 03:40:44 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/16 00:50:13 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ int		is_separator(char *str, int i)
 int		is_pipe(char *str, int i)
 {
 	if (str[i] == '|')
+		return (1);
+	return (0);
+}
+
+int		is_equal(char *str, int i)
+{
+	if (str[i] == '=')
 		return (1);
 	return (0);
 }

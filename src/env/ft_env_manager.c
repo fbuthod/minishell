@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:32:51 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/12 04:20:18 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/15 15:53:54 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,30 @@ int         init_env(char **envp)
     new = ft_lstnew(content);
     ft_lstadd_back(&g_env, new);
     return (0);
+}
+
+char        **env_to_tab()
+{
+    int i;
+    char **tmp;
+    t_list *head;
+    t_env_var *env;
+
+    if (!(tmp = ft_calloc(ft_lstsize(g_env), sizeof(char *))))
+        return (NULL);
+    head = g_env;
+    i = 0;
+    while (head)
+    {
+        env = (t_env_var *)head->content;
+        if (env->key)
+        {
+            tmp[i] = ft_strjoin(env->key, "=");
+            if (env->value)
+                tmp[i] = ft_strfjoin(tmp[i], env->value, 1);
+            i++;
+        }
+        head = head->next;
+    }
+    return (tmp);
 }

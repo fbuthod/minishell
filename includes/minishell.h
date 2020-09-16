@@ -31,15 +31,32 @@ typedef struct	s_env_var
 }				t_env_var;
 
 /*
+** builtins
+*/
+void			ft_env();
+void			ft_pwd();
+void 			ft_cd(t_command *cmd);
+void    		ft_exit(t_command *cmd);
+void    		ft_echo(t_command *cmd);
+void    		ft_unset(t_command *cmd);
+void    		ft_export(t_command *cmd);
+
+/*
 ** ft_env_manager.c
 */
 t_list			*g_env;
 int				g_last_state;
+int				g_in;
+int				g_out;
 t_env_var		*new_pair(char *key, char *value);
 t_env_var   	*get_env_value(char *key);
 void    		set_env_value(char *key, char *value);
+void        	remove_env_value(char *key);
 int				init_env(char **envp);
-void    		exec_command_list(char **cmd_list);
+int	    		exec_command_list(char **cmd_list);
+char       		**env_to_tab();
+t_boolean 		check_exit(char *cmd_list);
+char        	**ft_remove_void_elem(char **args);
 
 /*
 ** ft_file_descriptor_manager.c
@@ -75,6 +92,7 @@ int				is_spaceredirection(char *str, int i);
 int				is_redirection(char *str, int i);
 int				is_separator(char *str, int i);
 int				is_space(char *str, int i);
+int				is_equal(char *str, int i);
 int				is_pipe(char *str, int i);
 int				is_pipe_redirection(char *str, int i);
 void			check_quotes(t_split_quotes *states, char *str, int i);

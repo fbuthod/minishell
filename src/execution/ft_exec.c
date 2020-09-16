@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 02:52:52 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/15 06:46:45 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/16 03:41:41 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,53 @@ char        **ft_remove_void_elem(char **args)
     return (res);
 }
 
+t_boolean   check_valid_command(char **cmd)
+{
+    int i;
+
+    i = 0;
+    if (cmd && is_redirection(cmd[0], 0))
+        return (FALSE);
+    if (cmd)
+        while (cmd[i + 1])
+        {
+            if (is_redirection(cmd[i], 0) && is_redirection(cmd[i + 1], 0))
+                return (FALSE);
+            i++;
+        }
+    if (cmd && is_redirection(cmd[i], 0))
+        return (FALSE);
+    return (TRUE);
+}
+
+char        *ft_remove_quotes(char *arg)
+{
+    char *tmp;
+
+    if (!(tmp = ft_calloc(ft_strlen(arg) - 1, 1)))
+    {
+        free(arg);
+        return (NULL);
+    }
+    ft_memcpy(tmp, &arg[1], ft_strlen(arg) - 2);
+    free(arg);
+    return (tmp);
+}
+
+void        trim_quotes(char **args)
+{
+    int i;
+
+    i = 0;
+    while (args[i])
+    {
+        if ((args[i][0] == '\"' && args[i][ft_strlen(args[i]) - 1] == '\"') ||
+            (args[i][0] == '\'' && args[i][ft_strlen(args[i]) - 1] == '\''))
+            args[i] = ft_remove_quotes(args[i]);
+        i++;
+    }
+}
+
 int         fill_args(t_command *cmd_s, char *cmd, int i)
 {
     char **args;
@@ -66,7 +113,12 @@ int         fill_args(t_command *cmd_s, char *cmd, int i)
         return (FALSE);
     args = trim_tab(args);
     args = ft_remove_void_elem(args);
-
+    if (!check_valid_command(args))
+    {
+        ft_printf("Parsing error\n");
+        return (FALSE);
+    }
+    trim_quotes(args);
     cmd_s->args = args;
     return (TRUE);
 }
@@ -96,9 +148,8 @@ char        **fd_parser(char **args)
         }
         else if (is_str(args[j], "<"))
         {
-            setup_input(args[j]);
             j++;
-            ft_printf("SET INPUT %s\n", args[j]);
+            setup_input(args[j]);
         }
         else
             res[++i] = ft_strdup(args[j]);
@@ -106,8 +157,6 @@ char        **fd_parser(char **args)
     return (res);
 }
 
-// TODO: Bug si une seul <
-// TODO: Check non double redirection
 t_command   *make_command(char *cmd)
 {
     t_command   *command;
@@ -127,20 +176,87 @@ t_command   *make_command(char *cmd)
     return (command);
 }
 
+char    *ft_isinpath(char *executable)
+{
+    struct stat buf;
+    char **tmp_path;
+    char *complete_path;
+    int i;
+
+    i = 0;
+    if (stat(executable, &buf) >= 0)
+        return (ft_strdup(executable));
+    tmp_path = ft_split(get_env_value("PATH")->value, ':');
+    while (tmp_path[i])
+    {
+        complete_path = ft_strjoin(tmp_path[i], "/");
+        complete_path = ft_strfjoin(complete_path, executable, 1);
+        if (stat(complete_path, &buf) >= 0)
+        {
+            free_tab_str(tmp_path);
+            return (complete_path);
+        }
+        free(complete_path);
+        i++;
+    }
+    return (NULL);
+}
+
+void    exec_system(t_command *cmd)
+{
+    char *path;
+    char **tmp_env;
+
+    if ((path = ft_isinpath(cmd->cmd)))
+    {
+        tmp_env = env_to_tab();
+        if (execve(path, cmd->args, tmp_env) == -1)
+        {
+            ft_free_strs_tab(tmp_env);
+            ft_printf("Execution error %s\n", path);
+            g_last_state = 127;
+            exit (g_last_state);
+        }
+        ft_free_strs_tab(tmp_env);
+    }
+    else
+    {
+        g_last_state = 127;
+        ft_printf("%s : command introuvale\n", cmd->cmd);
+        exit (g_last_state);
+    }
+}
+
 void    exec_process(char *cmd)
 {
     t_command *cmd_struct;
 
     if (!(cmd_struct = make_command(cmd)))
         return ;
-    execvp(cmd_struct->cmd, cmd_struct->args);
+    if (!ft_strncmp(cmd_struct->cmd, "echo", 5))
+        ft_echo(cmd_struct);
+    else if (!ft_strncmp(cmd_struct->cmd, "cd", 3))
+        ft_cd(cmd_struct);
+    else if (!ft_strncmp(cmd_struct->cmd, "pwd", 4))
+        ft_pwd();
+    else if (!ft_strncmp(cmd_struct->cmd, "export", 7))
+        ft_export(cmd_struct);
+    else if (!ft_strncmp(cmd_struct->cmd, "unset", 6))
+        ft_unset(cmd_struct);
+    else if (!ft_strncmp(cmd_struct->cmd, "env", 4))
+        ft_env();
+    else if (!ft_strncmp(cmd_struct->cmd, "exit", 5))
+        ft_exit(cmd_struct);
+    else
+        exec_system(cmd_struct);
 }
 
-void    exec_command_list(char **cmd_list)
+int     exec_command_list(char **cmd_list)
 {
-    int   p[2];
-    pid_t pid;
-    int   fd_in = 0;
+    pid_t   pid;
+    int     p[2];
+    int     status;
+    int     fd_in = 0;
 
     while (*cmd_list != NULL)
     {
@@ -151,20 +267,30 @@ void    exec_command_list(char **cmd_list)
                 exit(1);
             else if (pid == 0)
             {
-                dup2(fd_in, 0); //change the input according to the old one 
+                dup2(fd_in, 0);
                 if (*(cmd_list + 1) != NULL)
                     dup2(p[1], 1);
                 close(p[0]);
                 exec_process((*cmd_list));
-                exit(1);
+                if (g_in > 0)
+                    close(g_in);
+                if (g_out > 0)
+                    close(g_out);
+                exit(g_last_state);
             }
             else
             {
-                wait(NULL);
+                waitpid(pid, &status, 0);
+                g_last_state = 0;
+                if (WEXITSTATUS(status))
+                    g_last_state = WEXITSTATUS(status);
+                if (check_exit(*cmd_list))
+                    return (1);
                 close(p[1]);
-                fd_in = p[0]; //save the input for the next command
+                fd_in = p[0];
             }
         }
         cmd_list++;
     }
+    return (0);
 }

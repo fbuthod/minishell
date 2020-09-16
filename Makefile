@@ -6,7 +6,7 @@
 #    By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 12:37:16 by fbuthod-          #+#    #+#              #
-#    Updated: 2020/09/14 01:12:50 by gbaud            ###   ########.fr        #
+#    Updated: 2020/09/16 01:25:45 by gbaud            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,13 @@ SRCS	=	./src/main.c									\
 			./src/parser/ft_split_quotes.c					\
 			./src/parser/ft_split_quotes_basics.c			\
 			./src/parser/ft_lexer.c							\
+			./src/builtins/ft_env.c							\
+			./src/builtins/ft_unset.c						\
+			./src/builtins/ft_export.c						\
+			./src/builtins/ft_pwd.c							\
+			./src/builtins/ft_exit.c						\
+			./src/builtins/ft_echo.c						\
+			./src/builtins/ft_cd.c							\
 			./src/utils/ft_signals.c
 
 

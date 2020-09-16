@@ -1,44 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/08 22:59:01 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/08 23:02:10 by gbaud            ###   ########.fr       */
+/*   Created: 2020/09/15 13:50:00 by gbaud             #+#    #+#             */
+/*   Updated: 2020/09/16 00:44:59 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_get_cwd(void)
+void    print_var(void *content)
 {
-	char	buff[256];
-	char	*path;
+    t_env_var *env_var;
 
-	if (getcwd(buff, 256) == NULL)
-		return (NULL);
-	path = ft_strdup(buff);
-	return (path);
+    env_var = (t_env_var *)content;
+    if (env_var->key && env_var->value)
+        ft_printf("%s=%s\n", env_var->key, env_var->value);
 }
 
-int		ft_pwd(t_cmd *cmd, t_builtin *builtin)
+void    ft_env()
 {
-	char	*path;
-
-	(void)builtin;
-	path = ft_strdup(cmd->pwd);
-	ft_printf("%s\n", path);
-	free(path);
-	return (0);
-}
-
-char	*ft_init_pwd(void)
-{
-	char	*path;
-
-	if ((path = ft_get_cwd()) == NULL)
-		return (ft_strdup("/"));
-	return (path);
+    ft_lstiter(g_env, print_var);
+    g_last_state = 0;
 }

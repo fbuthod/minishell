@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_signals.c                                       :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/11 09:35:24 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/16 01:41:18 by gbaud            ###   ########.fr       */
+/*   Created: 2020/09/16 01:12:31 by gbaud             #+#    #+#             */
+/*   Updated: 2020/09/16 03:37:19 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
-void	ft_apply_signals(void (*signal_func)(int))
+void    ft_echo(t_command *cmd)
 {
-	signal(SIGINT, signal_func);
-	signal(SIGQUIT, signal_func);
-}
+    t_boolean n;
+    int i;
 
-void	ft_shell_mode(int code)
-{
-	int pid;
-
-	pid = code;
-	if (code == 2)
-		ft_printf("\n%sminishell : \033[0m",
-					g_last_state ? "\033[1;31m" : "\033[1;32m");
-	else if (code == 3)
-		kill(pid, code);
+    i = 0;
+    n = FALSE;
+    while (cmd->args[++i])
+        if (!ft_strncmp(cmd->args[i], "-n", 3))
+            n = TRUE;
+        else
+        {
+            ft_printf("%s", cmd->args[i]);
+            if (cmd->args[i + 1])
+                ft_printf(" ");
+        }
+    if (!n)
+        ft_printf("\n");
 }

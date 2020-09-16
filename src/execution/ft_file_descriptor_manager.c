@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 01:09:58 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/15 05:33:20 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/15 15:10:12 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,35 @@
 
 void    setup_input(char *cmd_lexer)
 {
-    dup2(open(cmd_lexer, O_RDONLY), STDIN_FILENO);
+    if (g_in != -1)
+    {
+        close(g_in);
+        g_in = -1;
+    }
+    g_in = open(cmd_lexer, O_RDONLY);
+    if (g_in != -1)
+        dup2(g_in, STDIN_FILENO);
+    else
+    {
+        ft_printf("minishell: %s: Aucun fichier ou dossier de ce type\n", cmd_lexer);
+        g_last_state = 1;
+        exit(1);
+    }
 }
 
 void    setup_output(char *redirect, char *cmd)
 {
-    if (ft_strncmp(redirect, ">", 2) == 0) {
-        dup2(open(cmd, O_CREAT | O_WRONLY | O_TRUNC, 0664), STDOUT_FILENO);
-    } else if (ft_strncmp(redirect, ">>", 3) == 0) {
-        dup2(open(cmd, O_CREAT | O_WRONLY | O_APPEND, 0664), STDOUT_FILENO);
+    if (g_out != -1)
+    {
+        close(g_out);
+        g_out = -1;
     }
+    if (ft_strncmp(redirect, ">", 2) == 0)
+        g_out = open(cmd, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+    else if (ft_strncmp(redirect, ">>", 3) == 0)
+        g_out = open(cmd, O_CREAT | O_WRONLY | O_APPEND, 0664);
+    if (g_out != -1)
+        dup2(g_out, STDOUT_FILENO);
 }
 
 void    reset_fd(int save[2])
