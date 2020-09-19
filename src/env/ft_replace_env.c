@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:25:48 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/19 08:32:24 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/19 16:28:50 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,26 @@ char		*replace_word(char *s, int start, char *o, char *n)
 	return (res);
 }
 
-void		inside(char *res, int *i)
+void		inside(char **res, int *i)
 {
-	int				j;
-	char			*key;
-	char			*value;
+	int		j;
+	char	*key;
+	char	*value;
 
-	j = *i;
+	j = (*i);
 	value = NULL;
-	if (res[(*i) + 1] != '?')
+	if ((*res)[(*i) + 1] != '?')
 	{
-		while (ft_isalnum(res[++j]) || res[j] == '_')
+		while (ft_isalnum((*res)[++j]) || (*res)[j] == '_')
 			;
-		key = ft_substr(res, (*i), j - (*i));
+		key = ft_substr(*res, *i, j - (*i));
 		value = ft_strdup(get_env_value(&key[1]) ?
 			get_env_value(&key[1])->value : "");
 	}
 	else if ((key = ft_strdup("$?")))
 		value = ft_itoa(g_last_state);
 	if (value != NULL)
-		res = replace_word(res, (*i), key, value);
+		*res = replace_word(*res, *i, key, value);
 	(*i) += (value) ? ft_strlen(value) - 1 : ft_strlen(key) - 1;
 	ft_free_return(key);
 	free(value);
@@ -62,7 +62,7 @@ char		*replace_env_var(char *cmd)
 	{
 		check_quotes(&states, res, i);
 		if (!states.s_quote && res[i] == '$')
-			inside(res, &i);
+			inside(&res, &i);
 		states.escaped = (res[i] == '\\') ? states.escaped + 1 : 0;
 		i++;
 	}
