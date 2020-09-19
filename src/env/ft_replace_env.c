@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:25:48 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/10 06:53:31 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/19 01:51:34 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ char    *replace_env_var(char *cmd)
                 while (ft_isalnum(res[++j]) || res[j] == '_')
                     ;
                 key = ft_substr(res, i, j - i);
-                value = get_env_value(&key[1])->value;
+                value = ft_strdup(get_env_value(&key[1]) ? get_env_value(&key[1])->value : "");
             }
             else if ((key = ft_strdup("$?")))
                 value = ft_itoa(g_last_state);
             if (value != NULL)
                 res = replace_word(res, i, key, value);
             i += (value) ? ft_strlen(value) - 1 : ft_strlen(key) - 1;
-            if (ft_strncmp(key, "$?", 3) == 0 && ft_free_return(key))
-                free(value);
+            ft_free_return(key);
+            free(value);
         }
         states.escaped = (res[i] == '\\') ? states.escaped + 1 : 0;
         i++;

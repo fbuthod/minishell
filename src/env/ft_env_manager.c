@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 23:32:51 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/15 15:53:54 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/19 01:18:27 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ t_env_var   *get_env_value(char *key)
     t_list *tmp;
 
     tmp = g_env;
-    while (((t_env_var *)tmp->content)->key)
+    while (tmp)
     {
         if (!ft_strncmp(((t_env_var *)tmp->content)->key, key, ft_strlen(key) + 1))
             return (tmp->content);
         tmp = tmp->next;
     }
-    return (tmp->content);
+    return (NULL);
 }
 
 void        set_env_value(char *key, char *value)
@@ -45,7 +45,7 @@ void        set_env_value(char *key, char *value)
     if (get_env_value(key))
     {
         free(get_env_value(key)->value);
-        get_env_value(key)->value = ft_strdup(value);
+        get_env_value(key)->value = value ? ft_strdup(value) : ft_strdup("");
     }
     else
     {
@@ -100,15 +100,12 @@ int         init_env(char **envp)
     while (envp[i])
     {
         tmp = ft_split(envp[i], '=');
-        content = new_pair(tmp[0], tmp[1]);
+        content = new_pair(tmp[0], tmp[1] ? tmp[1] : "");
         new = ft_lstnew(content);
         ft_lstadd_back(&g_env, new);
         free_tab_str(tmp);
         i++;
     }
-    content = new_pair(NULL, NULL);
-    new = ft_lstnew(content);
-    ft_lstadd_back(&g_env, new);
     return (0);
 }
 

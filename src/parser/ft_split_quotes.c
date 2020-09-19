@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 04:02:15 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/16 16:12:46 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/18 05:36:44 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,26 @@ char	**allocate_all(char *str, int (*f)(const char *, int))
 	return (res);
 }
 
+t_boolean quotes_are_valid(const char *str)
+{
+	int i;
+	t_split_quotes states;
+
+	i = 0;
+	states.d_quote = 0;
+	states.s_quote = 0;
+	states.escaped = 0;
+	while (str[i])
+	{
+		check_quotes(&states, str, i);
+		states.escaped = (str[i] == '\\') ? states.escaped + 1 : 0;
+		i++;
+	}
+	if (states.d_quote || states.s_quote)
+		return (FALSE);
+	return (TRUE);
+}
+
 void	ft_fill_tab(char **res, char *str, int (*f)(const char *, int))
 {
 	int i;
@@ -91,7 +111,6 @@ void	fill_from(char **res, int k, char *str, int *i, int (*f)(const char *, int)
 		states.escaped = (str[*i] == '\\') ? states.escaped + 1 : 0;
 		(*i)++;
 	}
-	res[k][j++] = 0;
 }
 
 char	**ft_split_quotes(char *str, int (*f)(const char *, int))

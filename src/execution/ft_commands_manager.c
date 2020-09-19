@@ -6,30 +6,11 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 07:09:18 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/14 02:27:05 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/17 03:57:30 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_command   *get_current(t_list *head)
-{
-    return ((t_command *)(head->content));
-}
-
-t_command   *get_left(t_list *head)
-{
-    if (!head->prev)
-        return (NULL);
-    return ((t_command *)(head->prev->content));
-}
-
-t_command   *get_right(t_list *head)
-{
-    if (!head->next)
-        return (NULL);
-    return ((t_command *)(head->next->content));
-}
 
 t_boolean   is_str(char *str, char *red)
 {

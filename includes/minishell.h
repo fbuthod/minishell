@@ -39,7 +39,7 @@ void 			ft_cd(t_command *cmd);
 void    		ft_exit(t_command *cmd);
 void    		ft_echo(t_command *cmd);
 void    		ft_unset(t_command *cmd);
-void    		ft_export(t_command *cmd);
+void    		ft_export(t_command *cmd, t_boolean b);
 
 /*
 ** ft_env_manager.c
@@ -60,6 +60,7 @@ int	    		exec_command_list(char **cmd_list);
 char       		**env_to_tab();
 t_boolean 		check_exit(char *cmd_list);
 char        	**ft_remove_void_elem(char **args);
+char        	*ft_remove_quotes(char *arg);
 
 /*
 ** ft_file_descriptor_manager.c
@@ -71,9 +72,6 @@ void			reset_fd(int save[2]);
 /*
 **	ft_commands_utils.c
 */
-t_command		*get_current(t_list *head);
-t_command		*get_right(t_list *head);
-t_command		*get_left(t_list *head);
 t_boolean   	is_str(char *str, char *red);
 
 /*
@@ -90,6 +88,7 @@ void			ft_apply_signals(void (*signal_func)(int));
 /*
 ** ft_lexer.c functions
 */
+t_boolean 		quotes_are_valid(const char *str);
 char			**ft_lexer(char *str, int (*f)(const char *, int));
 int				is_spaceredirection(const char *str, int i);
 int				is_redirection(const char *str, int i);

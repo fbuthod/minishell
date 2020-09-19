@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 01:12:31 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/16 03:37:19 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/18 06:07:31 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void    ft_echo(t_command *cmd)
     i = 0;
     n = FALSE;
     while (cmd->args[++i])
+    {
         if (!ft_strncmp(cmd->args[i], "-n", 3))
             n = TRUE;
         else
@@ -28,6 +29,8 @@ void    ft_echo(t_command *cmd)
             if (cmd->args[i + 1])
                 ft_printf(" ");
         }
+    }
     if (!n)
         ft_printf("\n");
+    g_last_state = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 04:05:16 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/16 16:12:18 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/17 14:03:33 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int		count_strs(const char *str, int (*f)(const char *, int))
 				res++;
 				if (str[i] && !f(str, i))
 					res++;
+				if (str[i])
+					check_quotes(&states, str, i);
 			}
 			if (!str[i])
 				break;
