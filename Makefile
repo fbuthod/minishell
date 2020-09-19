@@ -6,7 +6,7 @@
 #    By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 12:37:16 by fbuthod-          #+#    #+#              #
-#    Updated: 2020/09/16 14:12:53 by gbaud            ###   ########.fr        #
+#    Updated: 2020/09/19 11:33:06 by gbaud            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,17 +21,23 @@ CFLAGS=-Wall -Wextra -Werror -g3 -fsanitize=address -I ./includes/
 NAME=minishell
 
 SRCS	=	./src/main.c									\
+			./src/env/ft_env_manager_utils.c				\
 			./src/env/ft_env_manager.c						\
 			./src/env/ft_replace_env.c						\
+			./src/execution/ft_exec_part_one.c					\
+			./src/execution/ft_exec_part_two.c					\
 			./src/execution/ft_exec.c						\
 			./src/execution/ft_commands_manager.c			\
 			./src/execution/ft_file_descriptor_manager.c 	\
 			./src/parser/ft_get_command_list.c				\
 			./src/parser/ft_split_quotes.c					\
 			./src/parser/ft_split_quotes_basics.c			\
+			./src/parser/ft_free_error.c					\
+			./src/parser/ft_checker.c						\
 			./src/parser/ft_lexer.c							\
 			./src/builtins/ft_env.c							\
 			./src/builtins/ft_unset.c						\
+			./src/builtins/ft_export_utils.c				\
 			./src/builtins/ft_export.c						\
 			./src/builtins/ft_pwd.c							\
 			./src/builtins/ft_exit.c						\

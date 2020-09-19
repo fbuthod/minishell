@@ -6,25 +6,13 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 04:02:15 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/18 05:36:44 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/19 11:00:48 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_free_error(char **res, int i)
-{
-	int j;
-
-	j = 0;
-	while (j < i)
-		free(res[j]);
-	free(res);
-	return (NULL);
-}
-
-#include <stdio.h>
-char	**allocate_all(char *str, int (*f)(const char *, int))
+char		**allocate_all(char *str, int (*f)(const char *, int))
 {
 	char	**res;
 	int		i;
@@ -50,10 +38,10 @@ char	**allocate_all(char *str, int (*f)(const char *, int))
 	return (res);
 }
 
-t_boolean quotes_are_valid(const char *str)
+t_boolean	quotes_are_valid(const char *str)
 {
-	int i;
-	t_split_quotes states;
+	int				i;
+	t_split_quotes	states;
 
 	i = 0;
 	states.d_quote = 0;
@@ -70,7 +58,7 @@ t_boolean quotes_are_valid(const char *str)
 	return (TRUE);
 }
 
-void	ft_fill_tab(char **res, char *str, int (*f)(const char *, int))
+void		ft_fill_tab(char **res, char *str, int (*f)(const char *, int))
 {
 	int i;
 	int j;
@@ -79,7 +67,7 @@ void	ft_fill_tab(char **res, char *str, int (*f)(const char *, int))
 	j = -1;
 	while (++j < count_strs(str, f))
 	{
-		fill_from(res, j, str, &i, f);
+		fill_from(res[j], str, &i, f);
 		while (f(str, i))
 		{
 			if (++j < count_strs(str, f))
@@ -93,7 +81,8 @@ void	ft_fill_tab(char **res, char *str, int (*f)(const char *, int))
 	}
 }
 
-void	fill_from(char **res, int k, char *str, int *i, int (*f)(const char *, int))
+void		fill_from(char *res, char *str, int *i,
+					int (*f)(const char *, int))
 {
 	t_split_quotes	states;
 	int				j;
@@ -107,13 +96,13 @@ void	fill_from(char **res, int k, char *str, int *i, int (*f)(const char *, int)
 		check_quotes(&states, str, *i);
 		if (!states.d_quote && !states.s_quote && f(str, *i))
 			break ;
-		res[k][j++] = str[*i];
+		res[j++] = str[*i];
 		states.escaped = (str[*i] == '\\') ? states.escaped + 1 : 0;
 		(*i)++;
 	}
 }
 
-char	**ft_split_quotes(char *str, int (*f)(const char *, int))
+char		**ft_split_quotes(char *str, int (*f)(const char *, int))
 {
 	char **res;
 

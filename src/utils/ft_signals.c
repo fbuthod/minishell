@@ -6,11 +6,11 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 09:35:24 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/17 14:34:58 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/19 10:39:12 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 void	ft_apply_signals(void (*signal_func)(int))
 {

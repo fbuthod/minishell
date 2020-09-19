@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_commands_manager.c                              :+:      :+:    :+:   */
+/*   ft_free_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/11 07:09:18 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/19 08:35:42 by gbaud            ###   ########.fr       */
+/*   Created: 2020/09/19 11:00:57 by gbaud             #+#    #+#             */
+/*   Updated: 2020/09/19 11:01:04 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_boolean	is_str(char *str, char *red)
+void		*ft_free_error(char **res, int i)
 {
-	if (!str && !red)
-		return (TRUE);
-	else if (!str || !red)
-		return (FALSE);
-	if (ft_strncmp(str, red, ft_strlen(red) + 1))
-		return (FALSE);
-	return (TRUE);
+	int j;
+
+	j = 0;
+	while (j < i)
+		free(res[j]);
+	free(res);
+	return (NULL);
 }

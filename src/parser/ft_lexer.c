@@ -6,13 +6,13 @@
 /*   By: gbaud <gbaud@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 05:05:17 by gbaud             #+#    #+#             */
-/*   Updated: 2020/09/16 16:05:02 by gbaud            ###   ########.fr       */
+/*   Updated: 2020/09/19 10:44:45 by gbaud            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*free_tab_str(char **res)
+int		free_tab_str(char **res)
 {
 	int i;
 
@@ -21,7 +21,7 @@ void	*free_tab_str(char **res)
 		free(res[i++]);
 	free(res);
 	res = NULL;
-	return (res);
+	return (1);
 }
 
 int		tab_len(char **res)
@@ -34,10 +34,10 @@ int		tab_len(char **res)
 	return (i);
 }
 
-char **trim_tab(char **res)
+char	**trim_tab(char **res)
 {
-	int i;
-	char *tmp;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	while (i < tab_len(res))
@@ -53,12 +53,12 @@ char **trim_tab(char **res)
 
 char	**ft_lexer(char *str, int (*f)(const char *, int))
 {
-	char **res;
-    int len;
-    int i;
+	char	**res;
+	int		len;
+	int		i;
 
-    res = ft_split_quotes(str, f);
-    len = tab_len(res);
+	res = ft_split_quotes(str, f);
+	len = tab_len(res);
 	i = -1;
 	trim_tab(res);
 	while (res != NULL && ++i < len)
